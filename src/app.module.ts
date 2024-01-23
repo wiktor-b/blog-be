@@ -4,14 +4,17 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { CommentsModule } from './comments/comments.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
     UsersModule,
     CommentsModule,
-    MongooseModule.forRoot(
-      'mongodb+srv://wiktorbechcinski:pol230600@blogapp.vjpivik.mongodb.net/?retryWrites=true&w=majority',
-    ),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+
+    MongooseModule.forRoot(process.env.MONGODB_URI),
   ],
   controllers: [AppController],
   providers: [AppService],
